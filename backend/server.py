@@ -123,18 +123,25 @@ async def register_user(user_data: UserCreate):
             detail="Email already registered"
         )
     
-    # Create new user
+    # Create new user - convert to dict and add hashed password
     user_dict = user_data.dict()
-    user_dict["password"] = hash_password(user_data.password)
+    hashed_password = hash_password(user_data.password)
+    user_dict["password"] = hashed_password
+    
+    # Create User object (this will add default fields like id, account_number, etc.)
     user_obj = User(**user_dict)
     
+    # Prepare document for database (include password)
+    user_doc = user_obj.dict()
+    user_doc["password"] = hashed_password  # Ensure password is in the document
+    
     # Save to database
-    await db.users.insert_one(user_obj.dict())
+    await db.users.insert_one(user_doc)
     
     # Create access token
     access_token = create_access_token(data={"sub": user_obj.id})
     
-    # Return response
+    # Return response (without password)
     user_response = UserResponse(**user_obj.dict())
     return TokenResponse(
         access_token=access_token,
