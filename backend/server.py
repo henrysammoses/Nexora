@@ -23,7 +23,7 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # JWT Configuration
-JWT_SECRET = os.environ.get('JWT_SECRET', 'nexorwa-bank-secret-key-2025')
+JWT_SECRET = os.environ.get('JWT_SECRET', 'nexora-bank-secure-jwt-secret-key-2025-v1.0')
 JWT_ALGORITHM = 'HS256'
 JWT_EXPIRATION_HOURS = 24
 
