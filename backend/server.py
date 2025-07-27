@@ -144,26 +144,26 @@ async def register_user(user_data: UserCreate):
 
 @api_router.post("/auth/login", response_model=TokenResponse)
 async def login_user(user_credentials: UserLogin):
-    # Find user
-    user = await db.users.find_one({"email": user_credentials.email})
-    if not user:
+    # Find user - get raw document with password
+    user_doc = await db.users.find_one({"email": user_credentials.email})
+    if not user_doc:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
         )
     
-    # Verify password
-    if not verify_password(user_credentials.password, user["password"]):
+    # Verify password using the raw document
+    if not verify_password(user_credentials.password, user_doc["password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
         )
     
     # Create access token
-    access_token = create_access_token(data={"sub": user["id"]})
+    access_token = create_access_token(data={"sub": user_doc["id"]})
     
-    # Return response
-    user_response = UserResponse(**user)
+    # Return response (create User object without password for response)
+    user_response = UserResponse(**user_doc)
     return TokenResponse(
         access_token=access_token,
         token_type="bearer",
