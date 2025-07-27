@@ -69,7 +69,7 @@ const LoginPage = ({ onLogin }) => {
       <div className="bg-white shadow-sm border-b border-blue-100">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center">
-            <div className="text-2xl font-bold text-blue-800">Nexorwa</div>
+            <div className="text-2xl font-bold text-blue-800">Nexora</div>
             <div className="ml-2 text-sm text-blue-600">Bank</div>
           </div>
         </div>
