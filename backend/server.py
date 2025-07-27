@@ -200,7 +200,7 @@ async def get_dashboard_summary(current_user: User = Depends(get_current_user)):
 # Health Check
 @api_router.get("/health")
 async def health_check():
-    return {"status": "healthy", "bank": "Nexorwa Bank", "version": "1.0.0"}
+    return {"status": "healthy", "bank": "Nexora Bank", "version": "1.0.0"}
 
 # Include the router in the main app
 app.include_router(api_router)
