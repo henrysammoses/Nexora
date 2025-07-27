@@ -34,7 +34,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
 # Create the main app without a prefix
-app = FastAPI(title="Nexorwa Bank API", version="1.0.0")
+app = FastAPI(title="Nexora Bank API", version="1.0.0")
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
