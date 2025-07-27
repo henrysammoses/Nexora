@@ -94,7 +94,7 @@ def create_access_token(data: dict) -> str:
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
+        detail="Could not validate credentials", 
         headers={"WWW-Authenticate": "Bearer"},
     )
     
@@ -106,11 +106,11 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     except jwt.PyJWTError:
         raise credentials_exception
     
-    user = await db.users.find_one({"id": user_id})
-    if user is None:
+    user_doc = await db.users.find_one({"id": user_id})
+    if user_doc is None:
         raise credentials_exception
     
-    return User(**user)
+    return User(**user_doc)
 
 # Auth Routes
 @api_router.post("/auth/register", response_model=TokenResponse)
